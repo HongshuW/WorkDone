@@ -22,6 +22,15 @@ public class Deadline extends Task {
     }
 
     /**
+     * Returns the time of the task.
+     *
+     * @return The time of the task
+     */
+    public LocalDateTime getTime() {
+        return this.time;
+    }
+
+    /**
      * Converts a task with deadline to a string.
      *
      * @return The string representation of a task with deadline.

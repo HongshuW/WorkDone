@@ -11,6 +11,7 @@ import workdone.command.ExitCommand;
 import workdone.command.FindTaskCommand;
 import workdone.command.GetListCommand;
 import workdone.command.HelpCommand;
+import workdone.command.SortCommand;
 import workdone.command.TaskDoneCommand;
 import workdone.command.TaskUndoneCommand;
 import workdone.command.UndoCommand;
@@ -163,6 +164,8 @@ public class Parser {
             return new HelpCommand();
         } else if (command.equals("clear")) {
             return new ClearCommand();
+        } else if (command.equals("sort")) {
+            return new SortCommand();
         } else {
             // Split the command into two phrases
             String[] words = command.split(" ", 2);
