@@ -24,6 +24,9 @@ public class GetListCommand extends Command {
         this.typesToHide = new ArrayList<>();
     }
 
+    /**
+     * Constructor of the class `GetListCommand`.
+     */
     public GetListCommand(List<String> typesToHide) {
         super("list");
         this.message = "Here are the tasks in your list:\n";
