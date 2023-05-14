@@ -37,6 +37,8 @@ public class HelpCommand extends Command {
                 + "clear done - delete all tasks marked as done\n"
                 + "View all tasks:\n"
                 + "list - list all tasks added\n"
+                + "list scheduled - list all scheduled tasks\n"
+                + "list backlog - list all todo tasks\n"
                 + "sort - sort tasks by deadline and display all tasks"
                 + "Find a task:\n"
                 + "find {keyword} - find tasks containing `keyword`\n"

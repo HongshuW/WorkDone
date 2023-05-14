@@ -1,6 +1,7 @@
 package workdone.ui;
 
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Stack;
 
 import workdone.command.AddTaskCommand;
@@ -133,16 +134,31 @@ public class Parser {
         }
     }
 
+    private static GetListCommand parseList(String[] words) {
+        if (words.length > 1 && words[1].equals("scheduled")) {
+            ArrayList<String> typesToHide = new ArrayList<>();
+            typesToHide.add("T");
+            return new GetListCommand(typesToHide);
+        } else if (words.length > 1 && words[1].equals("backlog")) {
+            ArrayList<String> typesToHide = new ArrayList<>();
+            typesToHide.add("D");
+            typesToHide.add("E");
+            return new GetListCommand(typesToHide);
+        } else {
+            return new GetListCommand();
+        }
+    }
+
     private static Command parseCommandWithTwoOrMoreWords(String[] words) throws WorkDoneException {
         String leadingWord = words[0];
-        if (leadingWord.equals("clear")) {
-            return Parser.parseClear(words);
-        } else if (leadingWord.equals("done")) {
+        if (leadingWord.equals("done")) {
             return Parser.parseCommandWithTaskNo(words);
         } else if (leadingWord.equals("undone")) {
             return Parser.parseCommandWithTaskNo(words);
         } else if (leadingWord.equals("delete")) {
             return Parser.parseCommandWithTaskNo(words);
+        } else if (leadingWord.equals("clear")) {
+            return Parser.parseClear(words);
         } else if (leadingWord.equals("todo")) {
             return Parser.parseTodo(words);
         } else if (leadingWord.equals("deadline")) {
@@ -151,6 +167,8 @@ public class Parser {
             return Parser.parseCommandWithTime(words, true);
         } else if (leadingWord.equals("find")) {
             return Parser.parseFind(words);
+        } else if (leadingWord.equals("list")) {
+            return Parser.parseList(words);
         } else {
             throw new InvalidCommandException();
         }
@@ -167,8 +185,6 @@ public class Parser {
         // Determine type of the command and return corresponding command instance
         if (command.equals("bye")) {
             return new ExitCommand();
-        } else if (command.equals("list")) {
-            return new GetListCommand();
         } else if (command.equals("undo")) {
             return Parser.parseUndo();
         } else if (command.equals("help")) {
