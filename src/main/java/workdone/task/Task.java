@@ -47,6 +47,13 @@ public class Task {
     }
 
     /**
+     * Checks whether the current task is done.
+     */
+    public boolean isDone() {
+        return this.isDone;
+    }
+
+    /**
      * Converts the task to a string.
      *
      * @return The string representation of the task.

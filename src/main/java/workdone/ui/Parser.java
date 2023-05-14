@@ -5,6 +5,7 @@ import java.util.Stack;
 
 import workdone.command.AddTaskCommand;
 import workdone.command.ClearCommand;
+import workdone.command.ClearDoneCommand;
 import workdone.command.Command;
 import workdone.command.DeleteTaskCommand;
 import workdone.command.ExitCommand;
@@ -124,9 +125,19 @@ public class Parser {
         return new UndoCommand(Parser.commands.pop());
     }
 
+    private static ClearCommand parseClear(String[] words) {
+        if (words.length > 0 && words[1].equals("done")) {
+            return new ClearDoneCommand();
+        } else {
+            return new ClearCommand();
+        }
+    }
+
     private static Command parseCommandWithTwoOrMoreWords(String[] words) throws WorkDoneException {
         String leadingWord = words[0];
-        if (leadingWord.equals("done")) {
+        if (leadingWord.equals("clear")) {
+            return Parser.parseClear(words);
+        } else if (leadingWord.equals("done")) {
             return Parser.parseCommandWithTaskNo(words);
         } else if (leadingWord.equals("undone")) {
             return Parser.parseCommandWithTaskNo(words);
@@ -162,8 +173,6 @@ public class Parser {
             return Parser.parseUndo();
         } else if (command.equals("help")) {
             return new HelpCommand();
-        } else if (command.equals("clear")) {
-            return new ClearCommand();
         } else if (command.equals("sort")) {
             return new SortCommand();
         } else {

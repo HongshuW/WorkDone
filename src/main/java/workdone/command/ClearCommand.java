@@ -4,7 +4,7 @@ import workdone.data.Storage;
 import workdone.data.TaskList;
 
 /**
- * Represents a command that deletes all task from the task list. A subclass of the Command class.
+ * Represents a command that deletes all tasks from the task list. A subclass of the Command class.
  */
 public class ClearCommand extends Command {
     /**
