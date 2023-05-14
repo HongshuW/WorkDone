@@ -136,7 +136,6 @@ public class Parser {
     private static Command parseCommandWithTwoOrMoreWords(String[] words) throws WorkDoneException {
         String leadingWord = words[0];
         if (leadingWord.equals("clear")) {
-            System.out.println("!!!");
             return Parser.parseClear(words);
         } else if (leadingWord.equals("done")) {
             return Parser.parseCommandWithTaskNo(words);

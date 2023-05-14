@@ -38,6 +38,15 @@ public class Event extends Task {
     }
 
     /**
+     * Returns the starting time of the task.
+     *
+     * @return The starting time of the task
+     */
+    public LocalDateTime getStartingTime() {
+        return this.startingTime;
+    }
+
+    /**
      * Converts a task with time range to string.
      *
      * @return The string representation of a task with time range.

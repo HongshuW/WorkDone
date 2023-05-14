@@ -9,6 +9,7 @@ import javafx.util.Pair;
 import workdone.data.Storage;
 import workdone.data.TaskList;
 import workdone.task.Deadline;
+import workdone.task.Event;
 import workdone.task.Task;
 
 /**
@@ -33,7 +34,7 @@ public class SortCommand extends Command {
     public void execute(TaskList tasks, Storage storage) {
         int len = tasks.getNumOfTasks();
         List<Task> otherTasks = new ArrayList<>();
-        List<Pair<LocalDateTime, Task>> deadlineTasks = new ArrayList<>();
+        List<Pair<LocalDateTime, Task>> tasksWithTime = new ArrayList<>();
 
         for (int i = 0; i < len; i++) {
             this.task = tasks.get(0);
@@ -41,12 +42,14 @@ public class SortCommand extends Command {
             storage.removeFromFile(0);
             tasks.removeFromList(this.task);
             if (this.task instanceof Deadline) {
-                deadlineTasks.add(new Pair<>(((Deadline) this.task).getTime(), this.task));
+                tasksWithTime.add(new Pair<>(((Deadline) this.task).getTime(), this.task));
+            } else if (this.task instanceof Event) {
+                tasksWithTime.add(new Pair<>(((Event) this.task).getStartingTime(), this.task));
             } else {
                 otherTasks.add(this.task);
             }
         }
-        deadlineTasks.sort(new Comparator<Pair<LocalDateTime, Task>>() {
+        tasksWithTime.sort(new Comparator<Pair<LocalDateTime, Task>>() {
             @Override
             public int compare(Pair<LocalDateTime, Task> o1, Pair<LocalDateTime, Task> o2) {
                 if (o1.getKey().isBefore(o2.getKey())) {
@@ -60,7 +63,7 @@ public class SortCommand extends Command {
         });
 
         // Add sorted tasks
-        for (Pair<LocalDateTime, Task> pair : deadlineTasks) {
+        for (Pair<LocalDateTime, Task> pair : tasksWithTime) {
             tasks.addTask(pair.getValue());
             storage.addToFile(pair.getValue());
         }
