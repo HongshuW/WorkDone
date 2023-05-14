@@ -126,7 +126,7 @@ public class Parser {
     }
 
     private static ClearCommand parseClear(String[] words) {
-        if (words.length > 0 && words[1].equals("done")) {
+        if (words.length > 1 && words[1].equals("done")) {
             return new ClearDoneCommand();
         } else {
             return new ClearCommand();
@@ -136,6 +136,7 @@ public class Parser {
     private static Command parseCommandWithTwoOrMoreWords(String[] words) throws WorkDoneException {
         String leadingWord = words[0];
         if (leadingWord.equals("clear")) {
+            System.out.println("!!!");
             return Parser.parseClear(words);
         } else if (leadingWord.equals("done")) {
             return Parser.parseCommandWithTaskNo(words);
